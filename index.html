@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff7e8">
+<title>一年级数学拔河赛</title>
+<style>
+:root{--blue:#3b82f6;--blue2:#1d4ed8;--red:#fb7185;--red2:#e11d48;--ink:#243041;--muted:#69778a;--cream:#fff7e8;--good:#16a34a;--bad:#dc2626;--shadow:0 14px 34px rgba(80,61,35,.13)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:radial-gradient(circle at 50% 0,#fffdf7,var(--cream) 60%,#f4ead4);color:var(--ink)}
+button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation;user-select:none}
+.app{min-height:100vh;padding:16px;display:flex;flex-direction:column;gap:14px}
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
+.brand{font-size:clamp(22px,2.5vw,34px);font-weight:950}.brand small{display:block;color:var(--muted);font-size:.43em;margin-top:3px}
+.tools,.actions{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}.actions{justify-content:flex-end}
+.pill,.btn{border:0;background:#fff;border-radius:15px;padding:10px 14px;font-weight:900;box-shadow:var(--shadow)}.pill{border:2px solid #eadfc8;border-radius:999px}
+.game{flex:1;display:grid;grid-template-columns:minmax(250px,1fr) minmax(430px,1.55fr) minmax(250px,1fr);gap:14px}
+.team{position:relative;overflow:hidden;min-height:610px;background:rgba(255,255,255,.93);border:3px solid;border-radius:28px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.team.blue{border-color:#bfdbfe}.team.red{border-color:#fecdd3}.team:before{content:"";position:absolute;left:0;right:0;top:0;height:9px}.blue:before{background:linear-gradient(90deg,var(--blue2),#60a5fa)}.red:before{background:linear-gradient(90deg,#fda4af,var(--red2))}
+.teamHead{display:flex;align-items:center;justify-content:space-between;margin-top:4px}.teamName{font-size:clamp(23px,2vw,31px);font-weight:950}.score{color:#fff;border-radius:17px;padding:7px 14px;min-width:60px;text-align:center;font-size:25px;font-weight:950}.blue .score{background:var(--blue)}.red .score{background:var(--red2)}
+.question{text-align:center;font-size:clamp(36px,4vw,58px);font-weight:950;margin:18px 0 12px;white-space:nowrap}.answer{height:70px;border:3px dashed #d6c9af;border-radius:18px;background:#fffdf8;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:950}.answer.empty:after{content:"请输入答案";font-size:17px;color:#b0a58e}.feedback{height:30px;text-align:center;padding-top:5px;font-weight:900}.good{color:var(--good)}.bad{color:var(--bad)}
+.pad{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.key{min-height:65px;border:0;border-radius:18px;background:#fff;font-size:29px;font-weight:950;color:var(--ink);box-shadow:0 5px 0 #e5dac5,0 8px 17px rgba(60,45,25,.08);transition:.08s}.key:active{transform:translateY(4px);box-shadow:0 1px 0 #e5dac5}.blue .ok{background:var(--blue);color:#fff;box-shadow:0 5px 0 var(--blue2)}.red .ok{background:var(--red);color:#fff;box-shadow:0 5px 0 var(--red2)}.clear{background:#f4ead8}.hint{text-align:center;color:var(--muted);font-size:12px;font-weight:750;margin-top:8px}
+.arena{position:relative;overflow:hidden;min-height:610px;border-radius:30px;border:3px solid #fff;background:linear-gradient(#daf3ff 0 58%,#d8efb6 58% 100%);box-shadow:var(--shadow)}
+.sun{position:absolute;right:8%;top:38px;width:70px;height:70px;border-radius:50%;background:#ffd45b;box-shadow:0 0 0 12px rgba(255,212,91,.17)}.cloud{position:absolute;left:10%;top:75px;width:92px;height:27px;border-radius:50px;background:#fff;box-shadow:30px -13px 0 4px #fff,60px 0 0 -3px #fff}.cloud.two{left:auto;right:18%;top:125px;transform:scale(.7)}
+.arenaTitle{position:absolute;z-index:5;left:50%;top:18px;transform:translateX(-50%);padding:8px 15px;border-radius:999px;background:rgba(255,255,255,.9);font-weight:950;white-space:nowrap;box-shadow:0 5px 14px rgba(60,70,40,.1)}
+.scene{position:absolute;left:0;right:0;top:122px;height:390px}.mid{position:absolute;left:50%;top:70px;bottom:0;border-left:4px dashed rgba(80,61,43,.4)}.flag{position:absolute;z-index:3;left:50%;top:54px;transform:translateX(-50%);font-size:38px}.ground{position:absolute;left:8%;right:8%;top:300px;border-top:3px solid rgba(67,91,37,.18)}
+.ropeWrap{position:absolute;z-index:6;left:50%;top:180px;width:82%;height:130px;transform:translateX(-50%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}.rope{position:absolute;left:4%;right:4%;top:57px;height:12px;border-radius:20px;background:repeating-linear-gradient(20deg,#8b5a2b 0 11px,#b6793f 11px 22px);box-shadow:0 3px 0 rgba(80,45,20,.2)}.knot{position:absolute;left:50%;top:43px;transform:translateX(-50%);width:28px;height:36px;border-radius:50%;background:#d89c58;border:4px solid #8b5a2b}
+.person{position:absolute;top:3px;width:76px;height:118px;transform-origin:50% 80%;animation:pull .65s ease-in-out infinite alternate}.person svg{width:100%;height:100%;overflow:visible}.b1{left:5%}.b2{left:23%;animation-delay:.17s}.r1{right:5%;animation-name:pullR}.r2{right:23%;animation-name:pullR;animation-delay:.17s}
+.lead{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);background:rgba(255,255,255,.9);border-radius:999px;padding:9px 16px;font-weight:950;white-space:nowrap}
+.modal,.win{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(30,36,46,.48);backdrop-filter:blur(6px);z-index:30}.modal.show,.win.show{display:flex}.panel,.winCard{width:min(620px,96vw);background:#fff;border-radius:28px;padding:24px;box-shadow:0 28px 90px rgba(0,0,0,.25)}.panel h2,.winCard h2{margin:0 0 17px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px;font-weight:850}.field select,.field input{border:2px solid #eadfc8;border-radius:14px;padding:11px 12px;background:#fffdf8}.panelBtns{display:flex;justify-content:flex-end;gap:9px;margin-top:19px}.primary,.secondary{border:0;border-radius:14px;padding:12px 18px;font-weight:900}.primary{background:var(--ink);color:#fff}.secondary{background:#f3ead8}
+.win{z-index:50}.winCard{text-align:center;width:min(520px,94vw)}.winEmoji{font-size:70px}.winCard h2{font-size:38px}.winCard p{color:var(--muted);font-weight:750}.confetti{position:fixed;top:-25px;width:11px;height:18px;border-radius:3px;z-index:60;animation:fall 2.8s linear forwards}
+.flash{animation:flash .35s ease}.shake{animation:shake .35s ease}
+@keyframes pull{from{transform:translateY(1px) rotate(-2deg)}to{transform:translateY(-4px) rotate(2deg)}}@keyframes pullR{from{transform:scaleX(-1) translateY(1px) rotate(-2deg)}to{transform:scaleX(-1) translateY(-4px) rotate(2deg)}}@keyframes flash{0%{background:#dcfce7;transform:scale(1)}50%{transform:scale(1.04)}100%{background:#fffdf8;transform:scale(1)}}@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@media(max-width:1050px){.game{grid-template-columns:1fr 1fr}.arena{grid-column:1/-1;grid-row:1;min-height:465px}.team{min-height:555px}.scene{top:75px;height:330px}.ropeWrap{top:145px}.ground{top:260px}}@media(max-width:720px){.top{grid-template-columns:1fr}.brand{text-align:center}.actions{justify-content:center}.game{grid-template-columns:1fr}.arena,.team{grid-column:auto;grid-row:auto}.arena{min-height:410px}.team{min-height:530px}.grid{grid-template-columns:1fr}.question{font-size:42px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <div class="brand">🧮 一年级数学拔河赛<small>10/20 以内加减法 · 双人对战</small></div>
+  <div class="tools"><div class="pill" id="timer">00:00</div><div class="pill" id="rule">领先 5 题获胜</div></div>
+  <div class="actions"><button class="btn" id="full">⛶ 全屏</button><button class="btn" id="settings">⚙ 设置</button><button class="btn" id="restart">↻ 重开</button></div>
+</header>
+<main class="game">
+<section class="team blue">
+  <div class="teamHead"><div class="teamName" id="blueName">🔵 蓝队</div><div class="score" id="blueScore">0</div></div>
+  <div class="question" id="blueQ">8 + 7 = ?</div><div class="answer empty" id="blueA"></div><div class="feedback" id="blueF"></div><div class="pad" data-team="blue"></div>
+  <div class="hint">蓝队：数字键输入，Enter 提交，Backspace 清除</div>
+</section>
+<section class="arena">
+  <div class="sun"></div><div class="cloud"></div><div class="cloud two"></div><div class="arenaTitle">答对一道，就把绳子拉过来！</div>
+  <div class="scene"><div class="mid"></div><div class="flag">🚩</div><div class="ground"></div>
+    <div class="ropeWrap" id="ropeWrap"><div class="rope"></div><div class="knot"></div>
+      <div class="person b1"><svg viewBox="0 0 80 120"><circle cx="38" cy="18" r="13" fill="#fde68a" stroke="#243041" stroke-width="4"/><path d="M38 31L42 72M40 45L64 58M41 47L20 58M42 72L62 103M42 72L25 105" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/><path d="M62 58L72 61" stroke="#243041" stroke-width="5" stroke-linecap="round"/></svg></div>
+      <div class="person b2"><svg viewBox="0 0 80 120"><circle cx="38" cy="18" r="13" fill="#fde68a" stroke="#243041" stroke-width="4"/><path d="M38 31L42 72M40 45L64 58M41 47L20 58M42 72L62 103M42 72L25 105" fill="none" stroke="#60a5fa" stroke-width="8" stroke-linecap="round"/><path d="M62 58L72 61" stroke="#243041" stroke-width="5" stroke-linecap="round"/></svg></div>
+      <div class="person r1"><svg viewBox="0 0 80 120"><circle cx="38" cy="18" r="13" fill="#fde68a" stroke="#243041" stroke-width="4"/><path d="M38 31L42 72M40 45L64 58M41 47L20 58M42 72L62 103M42 72L25 105" fill="none" stroke="#e11d48" stroke-width="8" stroke-linecap="round"/><path d="M62 58L72 61" stroke="#243041" stroke-width="5" stroke-linecap="round"/></svg></div>
+      <div class="person r2"><svg viewBox="0 0 80 120"><circle cx="38" cy="18" r="13" fill="#fde68a" stroke="#243041" stroke-width="4"/><path d="M38 31L42 72M40 45L64 58M41 47L20 58M42 72L62 103M42 72L25 105" fill="none" stroke="#fb7185" stroke-width="8" stroke-linecap="round"/><path d="M62 58L72 61" stroke="#243041" stroke-width="5" stroke-linecap="round"/></svg></div>
+    </div>
+  </div><div class="lead" id="lead">势均力敌，加油！</div>
+</section>
+<section class="team red">
+  <div class="teamHead"><div class="teamName" id="redName">🔴 红队</div><div class="score" id="redScore">0</div></div>
+  <div class="question" id="redQ">15 − 6 = ?</div><div class="answer empty" id="redA"></div><div class="feedback" id="redF"></div><div class="pad" data-team="red"></div>
+  <div class="hint">红队：Shift + 数字，Shift + Enter，Shift + Backspace</div>
+</section>
+</main>
+</div>
+
+<div class="modal" id="modal"><div class="panel"><h2>⚙ 游戏设置</h2><div class="grid">
+<label class="field">题型<select id="mode"><option value="mixed">加减混合</option><option value="add">只做加法</option><option value="sub">只做减法</option></select></label>
+<label class="field">数字范围<select id="range"><option value="10">10 以内</option><option value="20" selected>20 以内</option></select></label>
+<label class="field">领先几题获胜<input id="winDiff" type="number" min="2" max="10" value="5"></label>
+<label class="field">队伍名称<select id="names"><option value="br">蓝队 vs 红队</option><option value="bg">男生队 vs 女生队</option><option value="12">一队 vs 二队</option></select></label>
+</div><div class="panelBtns"><button class="secondary" id="cancel">取消</button><button class="primary" id="save">保存并重开</button></div></div></div>
+
+<div class="win" id="win"><div class="winCard"><div class="winEmoji" id="winEmoji">🏆</div><h2 id="winTitle">蓝队获胜！</h2><p id="winText"></p><button class="primary" id="again">再来一局</button></div></div>
+
+<script>
+(function(){
+var state={blue:{score:0,input:"",q:null},red:{score:0,input:"",q:null},rope:0,sec:0,running:true,mode:"mixed",range:20,win:5,names:{blue:"蓝队",red:"红队"}};
+function el(id){return document.getElementById(id)}
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function makeQ(){var op=state.mode==="mixed"?(Math.random()<.5?"add":"sub"):state.mode,a,b;if(op==="add"){a=rnd(0,state.range);b=rnd(0,state.range-a);return {text:a+" + "+b+" = ?",ans:a+b}}a=rnd(0,state.range);b=rnd(0,a);return {text:a+" − "+b+" = ?",ans:a-b}}
+function newQ(t){state[t].q=makeQ();state[t].input="";el(t+"Q").textContent=state[t].q.text;drawInput(t)}
+function drawInput(t){var a=el(t+"A");a.textContent=state[t].input;a.classList.toggle("empty",!state[t].input)}
+function feedback(t,msg,kind){var f=el(t+"F");f.textContent=msg;f.className="feedback "+(kind||"")}
+function score(){el("blueScore").textContent=state.blue.score;el("redScore").textContent=state.red.score}
+function rope(){var pct=(state.rope/state.win)*27;el("ropeWrap").style.transform="translateX(calc(-50% + "+pct+"%))";if(state.rope===0)el("lead").textContent="势均力敌，加油！";else{var t=state.rope<0?"blue":"red";el("lead").textContent=state.names[t]+"领先 "+Math.abs(state.rope)+" 题！"}}
+function press(t,k){if(!state.running)return;if(k==="clear"){state[t].input="";drawInput(t);feedback(t,"");return}if(k==="ok"){submit(t);return}if(state[t].input.length<2){state[t].input+=k;drawInput(t)}}
+function submit(t){if(!state[t].input)return;var box=el(t+"A");if(Number(state[t].input)===state[t].q.ans){state[t].score++;state.rope+=t==="blue"?-1:1;box.classList.remove("shake");box.classList.remove("flash");void box.offsetWidth;box.classList.add("flash");feedback(t,"✓ 答对啦！","good");score();rope();if(Math.abs(state.rope)>=state.win){finish(t);return}setTimeout(function(){if(state.running){newQ(t);feedback(t,"")}},300)}else{box.classList.remove("flash");box.classList.remove("shake");void box.offsetWidth;box.classList.add("shake");feedback(t,"再想一想～","bad");state[t].input="";setTimeout(function(){drawInput(t)},120)}}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function finish(t){state.running=false;el("winEmoji").textContent=t==="blue"?"💙🏆":"❤️🏆";el("winTitle").textContent=state.names[t]+"获胜！";el("winText").textContent="用时 "+fmt(state.sec)+" · "+state.names.blue+" "+state.blue.score+" : "+state.red.score+" "+state.names.red;el("win").classList.add("show");confetti()}
+function reset(){state.blue.score=0;state.red.score=0;state.rope=0;state.sec=0;state.running=true;score();rope();newQ("blue");newQ("red");feedback("blue","");feedback("red","");el("timer").textContent="00:00";el("rule").textContent="领先 "+state.win+" 题获胜";el("blueName").textContent="🔵 "+state.names.blue;el("redName").textContent="🔴 "+state.names.red;el("win").classList.remove("show")}
+function createPads(){document.querySelectorAll(".pad").forEach(function(p){var t=p.dataset.team;["1","2","3","4","5","6","7","8","9","clear","0","ok"].forEach(function(k){var b=document.createElement("button");b.className="key "+(k==="ok"?"ok":k==="clear"?"clear":"");b.textContent=k==="ok"?"✓":k==="clear"?"⌫":k;b.onclick=function(){press(t,k)};p.appendChild(b)})})}
+function confetti(){var cs=["#3b82f6","#fb7185","#facc15","#22c55e","#a855f7"];for(var i=0;i<70;i++){var c=document.createElement("i");c.className="confetti";c.style.left=Math.random()*100+"vw";c.style.background=cs[i%cs.length];c.style.animationDelay=Math.random()*.6+"s";c.style.animationDuration=2+Math.random()*1.5+"s";document.body.appendChild(c);setTimeout(function(x){return function(){x.remove()}}(c),3900)}}
+document.addEventListener("keydown",function(e){var t=e.shiftKey?"red":"blue";if(/^\d$/.test(e.key)){e.preventDefault();press(t,e.key)}if(e.key==="Enter"){e.preventDefault();press(t,"ok")}if(e.key==="Backspace"){e.preventDefault();press(t,"clear")}})
+el("restart").onclick=reset;el("again").onclick=reset;el("settings").onclick=function(){el("modal").classList.add("show")};el("cancel").onclick=function(){el("modal").classList.remove("show")};
+el("save").onclick=function(){state.mode=el("mode").value;state.range=Number(el("range").value);state.win=Math.min(10,Math.max(2,Number(el("winDiff").value)||5));var n=el("names").value;state.names=n==="bg"?{blue:"男生队",red:"女生队"}:n==="12"?{blue:"一队",red:"二队"}:{blue:"蓝队",red:"红队"};el("modal").classList.remove("show");reset()};
+el("full").onclick=async function(){try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(e){}};
+setInterval(function(){if(state.running){state.sec++;el("timer").textContent=fmt(state.sec)}},1000);
+createPads();reset();
+})();
+</script>
+</body>
+</html>
